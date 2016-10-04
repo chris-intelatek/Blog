@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <%= @blogpost.title %>
+  </div>
+  <div class="panel-body">
+    <p><%= @blogpost.author %></p>
+    <p><%= @blogpost.blog_entry %></p>
+    <p>Created on <%= @blogpost.created_at.strftime("%d/%m/%y") %> at <%= @blogpost.created_at.strftime("%I:%M %p") %></p>
+    <p>Updated on <%= @blogpost.updated_at.strftime("%d/%m/%y") %> at <%= @blogpost.updated_at.strftime("%I:%M %p") %></p>
+  </div>
+  <div class="panel-footer">
+    <%= link_to 'Edit', edit_blogpost_path(@blogpost), class: "btn btn-warning" %>
+    <%= link_to 'Destroy', @blogpost, method: :delete, data: { confirm: "are you sure?" }, class: "btn btn-danger" %>
+  </div>
+</div>
+
+<div class="panel panel-success">
+  <div class="panel-heading">
+    Write a Comment
+  </div>
+  <div>
+    <%= render "comments/form" %>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-header">
+      <h4>Comments</h4>
+    </div>
+    <% @blogpost.comments.each do |comment| %>
+    <div class="panel-body">
+      <p><strong><%= comment.author %></strong> said:</p>
+      <p><%= comment.comment_entry %></p>
+      <p>Created on <%= comment.created_at.strftime("%d/%m/%y") %> at <%= comment.created_at.strftime("%I:%M %p") %></p>
+      <p>Updated on <%= comment.updated_at.strftime("%d/%m/%y") %> at <%= comment.updated_at.strftime("%I:%M %p") %></p>
+      <%= link_to "Edit Comment", edit_blogpost_comment_path(@blogpost, comment) %> |
+      <%= link_to "Destroy", [comment.blogpost, comment], method: :delete, data: { confirm: "Are you sure?" } %>
+      
+      </div>
+      <% end %>
+    </div>
+
+<%= link_to "Back", blogpost_path %> | <%= link_to "Home", root_path %>
