@@ -9,19 +9,17 @@
         <%= link_to blog.title, blog %>
       </div>
       <div class="panel-body">
-        Created by <%= blog.author %> on <%= blog.created_at.strftime("%d/%m/%y") %> at <%= blog.created_at.strftime("%I:%M %p") %>
+        By <%= link_to blog.user.username, user_posts_path(id: blog.user.id) %>  on <%= blog.created_at.strftime("%d/%m/%y") %> at <%= blog.created_at.strftime("%I:%M %p") %>
         <p><%= blog.blog_entry[0...250] %>...[<%= link_to "read more", blog %>]</p>
         <p>Updated on <%= blog.updated_at.strftime("%d/%m/%y") %> at <%= blog.updated_at.strftime("%I:%M %p") %></p>
     </div>
-      <div class="panel-heading">
-        <%= link_to "Edit", edit_blogpost_path(blog), class: "btn btn-warning" %>   
-        <%= link_to "Delete", blog, method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-danger" %>
-       </div>
+      <% if current_user.id == blog.user.id %>
+        <div class="panel-footer">
+          <%= link_to "Edit", edit_blogpost_path(blog), class: "btn btn-warning" %>   
+          <%= link_to "Delete", blog, method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-danger" %>
+         </div>
+      <% end %>
      </div>
    </div>
    <% end %>
  </div>
-
-<br>
-
-<%= link_to 'New Blog Post', new_blogpost_path, class: "btn btn-primary btn-lg" %>

@@ -1,0 +1,21 @@
+<h1>Your Posts</h1>
+<div class="row">
+  <% current_user.blogposts.each do |blog| %>
+  <div class="col-md-6">
+    <div class ="panel panel-default">
+      <div class="panel-heading">
+        <%= link_to blog.title, blog %>
+      </div>
+      <div class="panel-body">
+        Created by <%= blog.user.email %> on <%= blog.created_at.strftime("%d/%m/%y") %> at <%= blog.created_at.strftime("%I:%M %p") %>
+        <p><%= blog.blog_entry[0...250] %>...[<%= link_to "read more", blog %>]</p>
+        <p>Updated on <%= blog.updated_at.strftime("%d/%m/%y") %> at <%= blog.updated_at.strftime("%I:%M %p") %></p>
+    </div>
+      <div class="panel-heading">
+        <%= link_to "Edit", edit_blogpost_path(blog), class: "btn btn-warning" %>   
+        <%= link_to "Delete", blog, method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-danger" %>
+       </div>
+     </div>
+   </div>
+   <% end %>
+ </div>

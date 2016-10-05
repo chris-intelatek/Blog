@@ -62,6 +62,15 @@ class BlogpostsController < ApplicationController
     end
   end
 
+
+def your_posts
+end
+
+
+def user_posts
+  @user = User.find(params[:id])
+end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blogpost
@@ -70,6 +79,6 @@ class BlogpostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def blogpost_params
-      params.require(:blogpost).permit(:title, :author, :blog_entry)
+      params.require(:blogpost).permit(:title, :author, :blog_entry, :user_id)
     end
 end

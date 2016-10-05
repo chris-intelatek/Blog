@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :blogposts do
     resources :comments, only: [:create, :edit, :update, :destroy]
   end
   
   root "blogposts#index"
   
+  get "your_posts" => "blogposts#your_posts"
+  get "user_posts" => "blogposts#user_posts" 
+  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

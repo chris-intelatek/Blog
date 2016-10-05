@@ -5,15 +5,17 @@
     <%= @blogpost.title %>
   </div>
   <div class="panel-body">
-    <p><%= @blogpost.author %></p>
+    <p><%= link_to @blogpost.user.username, user_posts_path(id: @blogpost.user.id) %></p>
     <p><%= @blogpost.blog_entry %></p>
     <p>Created on <%= @blogpost.created_at.strftime("%d/%m/%y") %> at <%= @blogpost.created_at.strftime("%I:%M %p") %></p>
     <p>Updated on <%= @blogpost.updated_at.strftime("%d/%m/%y") %> at <%= @blogpost.updated_at.strftime("%I:%M %p") %></p>
   </div>
-  <div class="panel-footer">
-    <%= link_to 'Edit', edit_blogpost_path(@blogpost), class: "btn btn-warning" %>
-    <%= link_to 'Destroy', @blogpost, method: :delete, data: { confirm: "are you sure?" }, class: "btn btn-danger" %>
-  </div>
+  <% if current_user.id == @blogpost.user.id %>
+    <div class="panel-footer">
+      <%= link_to 'Edit', edit_blogpost_path(@blogpost), class: "btn btn-warning" %>
+      <%= link_to 'Destroy', @blogpost, method: :delete, data: { confirm: "are you sure?" }, class: "btn btn-danger" %>
+    </div>
+  <% end %>
 </div>
 
 <div class="panel panel-success">
@@ -29,13 +31,14 @@
     </div>
     <% @blogpost.comments.each do |comment| %>
     <div class="panel-body">
-      <p><strong><%= comment.author %></strong> said:</p>
+      <p><strong><%= link_to comment.user.username, user_posts_path(id: comment.user.id) %></strong> said:</p>
       <p><%= comment.comment_entry %></p>
       <p>Created on <%= comment.created_at.strftime("%d/%m/%y") %> at <%= comment.created_at.strftime("%I:%M %p") %></p>
       <p>Updated on <%= comment.updated_at.strftime("%d/%m/%y") %> at <%= comment.updated_at.strftime("%I:%M %p") %></p>
-      <%= link_to "Edit Comment", edit_blogpost_comment_path(@blogpost, comment) %> |
-      <%= link_to "Destroy", [comment.blogpost, comment], method: :delete, data: { confirm: "Are you sure?" } %>
-      
+      <% if current_user.id == @blogpost.user.id %>
+        <%= link_to "Edit Comment", edit_blogpost_comment_path(@blogpost, comment) %> |
+        <%= link_to "Destroy", [comment.blogpost, comment], method: :delete, data: { confirm: "Are you sure?" } %>
+      <% end %>    
       </div>
       <% end %>
     </div>

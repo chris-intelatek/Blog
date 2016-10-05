@@ -1,0 +1,26 @@
+<h1><%= @user.username %>'s Page</h1>
+<p><strong>Name:</strong><%= @user.name %></p>
+<p><strong>Birthday:</strong><%= @user.birthday.strftime("%m/%d/%y") %></p>
+<div class="row">
+  <% @user.blogposts.each do |blogpost| %>
+  <div class="col-md-12">
+    <div class ="panel panel-success">
+      <div class="panel-heading">
+        <%= link_to blogpost.title, blogpost %>
+      </div>
+      <div class="panel-body">
+        By <%= link_to blogpost.user.username %>
+        <p><span class="posted-at">Posted on: <%= blogpost.created_at.strftime("%d/%m/%y") %> at <%= blogpost.created_at.strftime("%I:%M %p") %> </span></p>
+        <p><%= blogpost.blog_entry[0...250] %>...[<%= link_to "read more", blogpost %>]</p>
+        
+    </div>
+      <div class="panel-footer">
+        <%= link_to "Edit", edit_blogpost_path(blogpost), class: "btn btn-warning" %>   
+        <%= link_to "Delete", blogpost, method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-danger" %>
+       </div>
+     </div>
+   </div>
+   <% end %>
+ </div>
+
+<br>
